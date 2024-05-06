@@ -5,6 +5,7 @@ import (
 	"time"
 )
 
+// https://www.loginradius.com/blog/engineering/tune-the-go-http-client-for-high-performance/
 func GetHttpClient() *http.Client {
 	//By default, the Golang Http client performs the connection pooling.
 	//When the request completes, that connection remains open until the idle connection timeout (default is 90 seconds).
