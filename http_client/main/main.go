@@ -15,7 +15,7 @@ func main() {
 	}
 	for i := 0; i < 10; i++ {
 		start := time.Now()
-		mapResponse, _ := httpCaller.Get(context.Background(), "https://httpbin.org/get")
+		mapResponse, _ := httpCaller.Get(context.Background(), "https://httpbin.org/get", nil)
 		for key, val := range mapResponse {
 			fmt.Printf(" %v : %v\n", key, val)
 		}

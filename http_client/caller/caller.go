@@ -11,7 +11,7 @@ type Caller struct {
 	Client *http.Client
 }
 
-func (caller *Caller) Get(ctx context.Context, url string) (map[string]interface{}, error) {
+func (caller *Caller) Get(ctx context.Context, url string, queryMap map[string]string) (map[string]interface{}, error) {
 	maxConnWaitTime := caller.Client.Timeout
 	ctx, cancel := context.WithTimeout(ctx, maxConnWaitTime)
 	defer cancel()
@@ -21,6 +21,14 @@ func (caller *Caller) Get(ctx context.Context, url string) (map[string]interface
 		fmt.Printf("error creating request:%v", err)
 		return nil, err
 	}
+
+	// appending to existing query args
+	query := req.URL.Query()
+	for key, val := range queryMap {
+		query.Add(key, val)
+	}
+	req.URL.RawQuery = query.Encode()
+
 	res, err := caller.Client.Do(req)
 	if err != nil {
 		return nil, err
